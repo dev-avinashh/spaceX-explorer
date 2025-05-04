@@ -1,0 +1,15 @@
+import axios from "axios";
+
+const API_URL: string | undefined = "https://api.spacexdata.com/v3/";
+
+export const rocketsResponse = () => {
+  return async () => {
+    try {
+      const res = await axios.get(`${API_URL}rockets`);
+      return res.data;
+    } catch (error) {
+      console.error(error, "Error occurred at rockets response");
+      throw error;
+    }
+  };
+};
