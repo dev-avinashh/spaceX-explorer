@@ -39,17 +39,6 @@ const navItems: INavItem[] = [
     icon: <IconRocket size={18} />,
     path: "/dashboard/rockets",
   },
-  { label: "Crew", icon: <IconUser size={18} />, path: "/crew" },
-  {
-    label: "Payloads",
-    icon: <IconPackage size={18} />,
-    path: "/dashboard/payloads",
-  },
-  {
-    label: "Settings",
-    icon: <IconSettings size={18} />,
-    path: "/dashboard/settings",
-  },
 ];
 
 const DashboardLayout: FC = () => {

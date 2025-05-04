@@ -1,10 +1,15 @@
 import { Card, Image, Text, Badge, Button, Group } from "@mantine/core";
 import { ILaunch } from "../../pages/launches/launches.interface";
+import { useNavigate } from "react-router-dom";
 
 interface ICardProps {
   launch: ILaunch;
 }
 export const Cards = ({ launch }: ICardProps) => {
+  const navigate = useNavigate();
+  const viewDetailsHandler = (flight_number: number) => {
+    navigate(`/dashboard/launches/${flight_number}`);
+  };
   return (
     <>
       <Card shadow="sm" padding="lg" radius="md" withBorder miw={350}>
@@ -29,7 +34,13 @@ export const Cards = ({ launch }: ICardProps) => {
             : launch.details || "No mission details available."}{" "}
         </Text>
 
-        <Button color="blue" fullWidth mt="md" radius="md">
+        <Button
+          color="blue"
+          onClick={() => viewDetailsHandler(launch.flight_number)}
+          fullWidth
+          mt="md"
+          radius="md"
+        >
           View Details
         </Button>
       </Card>

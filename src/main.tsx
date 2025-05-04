@@ -8,6 +8,7 @@ import DashboardLayout from "./layouts/DashboardLayout";
 import PrivateRoute from "./components/PrivateRoute";
 import Launches from "./pages/launches/Launches";
 import Rockets from "./pages/rockets/Rockets";
+import { LaunchDetails } from "./pages/launches/launchDetails/LaunchDetails";
 
 export const routes = [
   {
@@ -33,6 +34,11 @@ export const routes = [
         index: true,
         path: "launches",
         element: <Launches />,
+      },
+      {
+        // Dynamic route for individual launch
+        path: "launches/:launchId",
+        element: <LaunchDetails />,
       },
       {
         path: "rockets",

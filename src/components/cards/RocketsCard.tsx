@@ -67,7 +67,7 @@ export const RocketsCard = ({ rocket }: IRocketCardsProps) => {
         <Progress value={rocket.success_rate_pct} />
 
         <Button color="blue" fullWidth mt="md" radius="md">
-          Book classic tour now
+          View Details
         </Button>
       </Card>
     </>
