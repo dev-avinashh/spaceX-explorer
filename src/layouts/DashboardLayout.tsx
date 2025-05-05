@@ -1,4 +1,4 @@
-import { FC, ReactNode } from "react";
+import { FC, ReactNode, useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import {
   AppShell,
@@ -11,12 +11,12 @@ import {
   ScrollArea,
   UnstyledButton,
   Stack,
+  MediaQuery,
+  Burger,
+  useMantineTheme,
 } from "@mantine/core";
 import {
   IconRocket,
-  IconUser,
-  IconSettings,
-  IconCalendarEvent,
   IconPackage,
   IconLogout,
 } from "@tabler/icons-react";
@@ -31,60 +31,65 @@ interface INavItem {
 const navItems: INavItem[] = [
   {
     label: "Launches",
-    icon: <IconCalendarEvent size={18} />,
+    icon: <IconRocket size={16} />,
     path: "/dashboard/launches",
   },
   {
     label: "Rockets",
-    icon: <IconRocket size={18} />,
+    icon: <IconPackage size={16} />,
     path: "/dashboard/rockets",
   },
 ];
 
 const DashboardLayout: FC = () => {
   const logout = useAuthStore((state) => state.logout);
+  const [opened, setOpened] = useState(false);
+  const theme = useMantineTheme();
 
   return (
     <AppShell
       padding="md"
+      navbarOffsetBreakpoint="sm"
       navbar={
-        <Navbar width={{ base: 240 }} p="xs">
+        <Navbar 
+          p="xs"
+          width={{ base: 250 }}
+          hiddenBreakpoint="sm"
+          hidden={!opened}
+          height="100vh"
+        >
           <Navbar.Section>
-            <Text fw={700} fz="lg" mb="md">
-              🚀 SpaceX Explorer
-            </Text>
+            <Group p="md" position="apart">
+              <Group>
+                <ThemeIcon color="blue" variant="light">
+                  <IconRocket size={18} />
+                </ThemeIcon>
+                <Text fw={700}>SpaceX Explorer</Text>
+              </Group>
+            </Group>
           </Navbar.Section>
-          <Navbar.Section grow component={ScrollArea}>
-            <Stack>
-              {navItems.map((item) => (
+          <Navbar.Section grow component={ScrollArea} mx="-xs" px="xs">
+            <Stack spacing={0}>
+              {navItems.map((item, index) => (
                 <NavLink
-                  key={item.label}
+                  key={item.path}
                   to={item.path}
-                  style={{ textDecoration: "none" }}
+                  onClick={() => setOpened(false)}
+                  style={({ isActive }) => ({
+                    textDecoration: "none",
+                    backgroundColor: isActive ? "#d0ebff" : "transparent", // light blue
+                    color: isActive ? "#1c7ed6" : "#333", // dark blue if active
+                    display: "block",
+                    padding: "10px",
+                    borderRadius: "4px",
+                  })}
                 >
-                  {({ isActive }) => (
-                    <UnstyledButton
-                      px="sm"
-                      py="xs"
-                      style={{
-                        borderRadius: 6,
-                        backgroundColor: isActive ? "#d0ebff" : "transparent", // light blue
-                        color: isActive ? "#1c7ed6" : "#333", // dark blue if active
-                        fontWeight: 600,
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.5rem",
-                      }}
-                    >
-                      <ThemeIcon
-                        variant="light"
-                        color={isActive ? "blue" : "gray"}
-                      >
-                        {item.icon}
-                      </ThemeIcon>
-                      {item.label}
-                    </UnstyledButton>
-                  )}
+                  <Group>
+                    <ThemeIcon variant="light" color="blue" size="sm">
+                      {item.icon}
+                    </ThemeIcon>
+                    <Text size="sm">{item.label}</Text>
+                  </Group>
                 </NavLink>
               ))}
             </Stack>
@@ -92,42 +97,46 @@ const DashboardLayout: FC = () => {
           <Navbar.Section>
             <UnstyledButton
               onClick={logout}
-              px="sm"
-              py="xs"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "0.5rem",
-                borderRadius: 6,
-                fontWeight: 500,
+              sx={{
+                display: "block",
+                padding: "10px",
+                color: "#333",
+                "&:hover": {
+                  backgroundColor: "#f1f3f5",
+                },
               }}
             >
-              <ThemeIcon variant="light" color="red">
-                <IconLogout size={18} />
-              </ThemeIcon>
-              Logout
+              <Group>
+                <ThemeIcon variant="light" color="red" size="sm">
+                  <IconLogout size={16} />
+                </ThemeIcon>
+                <Text size="sm">Logout</Text>
+              </Group>
             </UnstyledButton>
           </Navbar.Section>
         </Navbar>
       }
       header={
-        <Header
-          height={60}
-          px="md"
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <Text fw={600}>SpaceX Launch Dashboard</Text>
-          <Text size="sm" color="gray">
-            v1.0.0
-          </Text>
+        <Header height={60} p="xs">
+          <Group position="apart" sx={{ height: "100%" }}>
+            <Group>
+              <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
+                <Burger
+                  opened={opened}
+                  onClick={() => setOpened((o) => !o)}
+                  size="sm"
+                  color={theme.colors.gray[6]}
+                  mr="xs"
+                />
+              </MediaQuery>
+              <Text size="lg" weight={500}>SpaceX Launch Dashboard</Text>
+            </Group>
+            <Text size="xs" color="dimmed">v1.0.0</Text>
+          </Group>
         </Header>
       }
     >
-      <Box>
+      <Box pt="xs">
         <Outlet />
       </Box>
     </AppShell>
