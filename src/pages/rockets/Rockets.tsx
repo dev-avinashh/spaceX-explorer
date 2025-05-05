@@ -17,7 +17,7 @@ const Rockets: FC = () => {
   const [activePage, setPage] = useState(1);
   const [search, setSearch] = useState("");
 
-  // handling search in frontend as no key available
+  // handling search in frontend as no key available for handling from backend
   const filteredRockets = useMemo(() => {
     if (!rockets) return [];
     if (!search.trim()) return rockets;

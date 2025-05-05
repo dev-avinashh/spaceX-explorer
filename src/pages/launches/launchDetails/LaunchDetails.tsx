@@ -29,6 +29,8 @@ export const LaunchDetails = () => {
   return (
     <Grid>
       {/* Left panel */}
+
+      
       <Grid.Col xs={12} md={4}>
         <Card shadow="sm" padding="lg" radius="md" mih={480} withBorder>
           <Card.Section>
@@ -38,15 +40,28 @@ export const LaunchDetails = () => {
               alt="mission_image"
               w="auto"
               fit="contain"
+              py={10}
             />
           </Card.Section>
+          <Divider my="md" />
 
           <Text fw={700} size={30} mb={10} mt={40}>
             {data.mission_name}
           </Text>
-          <Text fw={500}> Launch Year: {data.launch_year}</Text>
-          <Text fw={500}> Launch Window: {data.launch_window}</Text>
-          <Text fw={500}> Rocket Name: {data.rocket.rocket_name}</Text>
+          <Group>
+            <Text fw={700}>Launch Year:</Text> :
+            <Text fw={500}> {data.launch_year}</Text>
+          </Group>
+          <Group>
+            <Text fw={700}> Launch Window:</Text>
+
+            <Text fw={500}> {data.launch_window}</Text>
+          </Group>
+          <Group>
+            <Text fw={700}> Rocket Name: </Text>
+
+            <Text fw={500}> {data.rocket.rocket_name}</Text>
+          </Group>
         </Card>
       </Grid.Col>
 

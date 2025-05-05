@@ -64,12 +64,12 @@ const Launches: FC = () => {
       : launchFilter?.length > 0
       ? filteredLaunchDataError
       : allLaunchError;
-  const pagePerContent = 12;
+  const dataPerPage = 12;
   const totalPages = launchData
-    ? Math.ceil(launchData.length / pagePerContent)
+    ? Math.ceil(launchData.length / dataPerPage)
     : 0;
-  const initialPageValue = (activePage - 1) * pagePerContent;
-  const finalPageValue = activePage * pagePerContent;
+  const initialPageValue = (activePage - 1) * dataPerPage;
+  const finalPageValue = activePage * dataPerPage;
 
   if (launchError) return <div>Error loading launches</div>;
 

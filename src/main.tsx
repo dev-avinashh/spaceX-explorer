@@ -8,7 +8,9 @@ import DashboardLayout from "./layouts/DashboardLayout";
 import PrivateRoute from "./components/PrivateRoute";
 import Launches from "./pages/launches/Launches";
 import Rockets from "./pages/rockets/Rockets";
+import Payloads from "./pages/payloads/Payloads";
 import { LaunchDetails } from "./pages/launches/launchDetails/LaunchDetails";
+import RocketDetails from "./pages/rockets/rocketDetails/RocketDetails";
 
 export const routes = [
   {
@@ -36,13 +38,20 @@ export const routes = [
         element: <Launches />,
       },
       {
-        // Dynamic route for individual launch
         path: "launches/:launchId",
         element: <LaunchDetails />,
       },
       {
         path: "rockets",
         element: <Rockets />,
+      },
+      {
+        path: "rockets/:rocketId",
+        element: <RocketDetails />,
+      },
+      {
+        path: "payloads",
+        element: <Payloads />,
       },
     ],
   },

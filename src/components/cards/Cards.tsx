@@ -12,7 +12,7 @@ export const Cards = ({ launch }: ICardProps) => {
   };
   return (
     <>
-      <Card shadow="sm" padding="lg" radius="md" withBorder miw={350}>
+      <Card shadow="sm" padding="lg" radius="md" withBorder maw={350}>
         <Card.Section>
           <Image
             src={launch.links.mission_patch}
@@ -20,6 +20,7 @@ export const Cards = ({ launch }: ICardProps) => {
             alt="mission_image"
             w="auto"
             fit="contain"
+            py="sm"
           />
         </Card.Section>
 

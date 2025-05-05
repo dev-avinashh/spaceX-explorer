@@ -8,19 +8,25 @@ import {
   Progress,
   Chip,
 } from "@mantine/core";
-import { IRockets } from "../../pages/rockets/rockets.interface";
+import { IRocket } from "../../pages/rockets/rockets.interface";
+import { Navigate, useNavigate } from "react-router-dom";
 
 interface IRocketCardsProps {
-  rocket: IRockets;
+  rocket: IRocket;
 }
 
 export const RocketsCard = ({ rocket }: IRocketCardsProps) => {
+  const navigate = useNavigate();
+
+  const viewDetailsHandler = (rocketId: string) => {
+    navigate(`/dashboard/rockets/${rocketId}`);
+  };
   return (
     <>
       <Card shadow="sm" padding="lg" radius="md" withBorder maw={350}>
         <Card.Section>
           <Image
-            src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
+            src={rocket?.flickr_images[0]}
             height={160}
             alt="Norway"
           />
@@ -66,7 +72,13 @@ export const RocketsCard = ({ rocket }: IRocketCardsProps) => {
         </Text>
         <Progress value={rocket.success_rate_pct} />
 
-        <Button color="blue" fullWidth mt="md" radius="md">
+        <Button
+          color="blue"
+          fullWidth
+          mt="md"
+          radius="md"
+          onClick={() => viewDetailsHandler(rocket.rocket_id)}
+        >
           View Details
         </Button>
       </Card>

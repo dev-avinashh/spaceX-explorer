@@ -19,6 +19,7 @@ import {
   IconRocket,
   IconPackage,
   IconLogout,
+  IconFileAi
 } from "@tabler/icons-react";
 import { useAuthStore } from "../store/auth.store";
 
@@ -38,6 +39,11 @@ const navItems: INavItem[] = [
     label: "Rockets",
     icon: <IconPackage size={16} />,
     path: "/dashboard/rockets",
+  },
+  {
+    label: "Payloads",
+    icon: <IconFileAi size={16} />,
+    path: "/dashboard/payloads",
   },
 ];
 
@@ -61,9 +67,9 @@ const DashboardLayout: FC = () => {
           <Navbar.Section>
             <Group p="md" position="apart">
               <Group>
-                <ThemeIcon color="blue" variant="light">
+                {/* <ThemeIcon color="blue" variant="light">
                   <IconRocket size={18} />
-                </ThemeIcon>
+                </ThemeIcon> */}
                 <Text fw={700}>SpaceX Explorer</Text>
               </Group>
             </Group>
