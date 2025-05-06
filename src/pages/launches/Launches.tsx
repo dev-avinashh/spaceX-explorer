@@ -1,6 +1,6 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Cards } from "../../components/cards/Cards";
-import { Flex, Pagination, Select, TextInput } from "@mantine/core";
+import { Container, Flex, Pagination, Select, Text, TextInput } from "@mantine/core";
 import {
   getLaunchDataByFilter,
   launchResponseData,
@@ -8,11 +8,14 @@ import {
 } from "./launches.services";
 import { useQuery } from "@tanstack/react-query";
 import { ILaunch } from "./launches.interface";
+import { Loading } from "../../components/loading/Loading";
+import { useDebouncedValue } from "@mantine/hooks";
 
 const Launches: FC = () => {
   const [activePage, setPage] = useState(1);
   const [search, setSearch] = useState("");
-  const [launchFilter, setLaunchFilter] = useState("");
+  const [debouncedSearch] = useDebouncedValue(search, 700);
+  const [launchFilter, setLaunchFilter] = useState<string | null>("");
 
   // query for handling all launches data
   const {
@@ -30,9 +33,9 @@ const Launches: FC = () => {
     isLoading: searchedLoading,
     error: searchedError,
   } = useQuery<ILaunch[]>({
-    queryKey: [search, "search"],
-    queryFn: () => searchByRocketName(search),
-    enabled: search.length > 0,
+    queryKey: [debouncedSearch, "debouncedSearch"],
+    queryFn: () => searchByRocketName(debouncedSearch),
+    enabled: debouncedSearch.length > 0,
   });
 
   // query for handling filters
@@ -43,25 +46,34 @@ const Launches: FC = () => {
   } = useQuery<ILaunch[]>({
     queryKey: [launchFilter, "filter"],
     queryFn: () => getLaunchDataByFilter(launchFilter),
-    enabled: launchFilter.length > 0,
+    enabled: !!launchFilter,
   });
 
+  useEffect(() => {
+    setPage(1);
+  }, [debouncedSearch, launchFilter]);
+
+  // determining launch data
   const launchData =
     search.length > 0
       ? searchedLaunches
-      : launchFilter?.length > 0
+      : launchFilter
       ? filteredLaunchedData
       : launches;
+
+  // determining launch loading state
   const launchLoading =
     search.length > 0
       ? searchedLoading
-      : launchFilter?.length > 0
+      : launchFilter
       ? filteredLaunchDataLoading
       : allLaunchLoading;
+
+  // determining launch error state
   const launchError =
     search.length > 0
       ? searchedError
-      : launchFilter?.length > 0
+      : launchFilter
       ? filteredLaunchDataError
       : allLaunchError;
   const dataPerPage = 12;
@@ -74,13 +86,21 @@ const Launches: FC = () => {
   if (launchError) return <div>Error loading launches</div>;
 
   return (
-    <>
+    <Container fluid>
+      <Flex
+        direction={{ base: "column", sm: "row" }}
+        gap={{ base: "sm", sm: "xl" }}
+        justify={{ base: "center", sm: "flex-start" }}
+        wrap="wrap"
+        mb={40}
+      >
+        <Text style={{ fontSize: "24px" }}>Launches Done By SpaceX</Text>
+      </Flex>
       <Flex
         mb={60}
-        mr={100}
         direction={{ base: "column", sm: "row" }}
         gap={{ base: "sm", sm: "lg" }}
-        justify={{ sm: "flex-end" }}
+        justify={{ sm: "flex-start" }}
         wrap="wrap"
       >
         <TextInput
@@ -88,33 +108,41 @@ const Launches: FC = () => {
           value={search}
           onChange={(event) => setSearch(event.currentTarget.value)}
           w={400}
+          style={{ border: "1px solid grey", color: "black" }}
         />
 
         <Select
           placeholder="Filter Launches"
-          data={["Past", "upcoming"]}
-          searchValue={launchFilter}
-          onSearchChange={setLaunchFilter}
+          data={["past", "upcoming"]}
+          value={launchFilter}
+          onChange={setLaunchFilter}
           clearable
+          style={{ border: "1px solid grey", color: "black" }}
         />
       </Flex>
+    
       <Flex
         direction={{ base: "column", sm: "row" }}
         gap={{ base: "sm", sm: "lg" }}
-        justify={{ sm: "center" }}
+        justify={{ sm:"flex-start" }}
         wrap="wrap"
       >
-        {launchLoading && <>loading launches</>}
         {launchData?.length === 0 && <>No result found</>}
-        {launchData &&
+        {launchLoading ? (
+          <>
+            <Loading count={dataPerPage} />
+          </>
+        ) : (
+          launchData &&
           launchData?.length > 0 &&
           launchData
             .slice(initialPageValue, finalPageValue)
-            .map((launch: any) => (
-              <div key={launch.flight_number}>
+            .map((launch, index) => (
+              <div key={index}>
                 <Cards launch={launch} />
               </div>
-            ))}
+            ))
+        )}
       </Flex>
       <Flex
         direction={{ base: "column", sm: "row" }}
@@ -131,7 +159,7 @@ const Launches: FC = () => {
           />
         )}
       </Flex>
-    </>
+    </Container>
   );
 };
 

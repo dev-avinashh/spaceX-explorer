@@ -7,6 +7,7 @@ import {
   Group,
   Progress,
   Chip,
+  Box,
 } from "@mantine/core";
 import { IRocket } from "../../pages/rockets/rockets.interface";
 import { Navigate, useNavigate } from "react-router-dom";
@@ -23,13 +24,17 @@ export const RocketsCard = ({ rocket }: IRocketCardsProps) => {
   };
   return (
     <>
-      <Card shadow="sm" padding="lg" radius="md" withBorder maw={350}>
+      <Card
+        shadow="sm"
+        padding="lg"
+        radius="md"
+        withBorder
+        w={370}
+        h={390}
+        style={{ position: "relative" }}
+      >
         <Card.Section>
-          <Image
-            src={rocket?.flickr_images[0]}
-            height={160}
-            alt="Norway"
-          />
+          <Image src={rocket?.flickr_images[0]} height={160} alt="Norway" />
         </Card.Section>
 
         <Group
@@ -71,16 +76,27 @@ export const RocketsCard = ({ rocket }: IRocketCardsProps) => {
           <div>{rocket.success_rate_pct}</div>
         </Text>
         <Progress value={rocket.success_rate_pct} />
-
-        <Button
-          color="blue"
-          fullWidth
-          mt="md"
-          radius="md"
-          onClick={() => viewDetailsHandler(rocket.rocket_id)}
+        <Box
+          style={{
+            position: "absolute",
+            bottom: "20px",
+            left: "0",
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+          }}
         >
-          View Details
-        </Button>
+          <Button
+            color="blue"
+            fullWidth
+            mt="md"
+            radius="md"
+            w={350}
+            onClick={() => viewDetailsHandler(rocket.rocket_id)}
+          >
+            View Details
+          </Button>
+        </Box>
       </Card>
     </>
   );

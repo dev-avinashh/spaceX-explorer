@@ -19,7 +19,8 @@ import {
   IconRocket,
   IconPackage,
   IconLogout,
-  IconFileAi
+  IconFileAi,
+  IconDetails
 } from "@tabler/icons-react";
 import { useAuthStore } from "../store/auth.store";
 
@@ -45,6 +46,11 @@ const navItems: INavItem[] = [
     icon: <IconFileAi size={16} />,
     path: "/dashboard/payloads",
   },
+  {
+    label: "About",
+    icon: <IconDetails size={16} />,
+    path: "/dashboard/about",
+  },
 ];
 
 const DashboardLayout: FC = () => {
@@ -62,7 +68,6 @@ const DashboardLayout: FC = () => {
           width={{ base: 250 }}
           hiddenBreakpoint="sm"
           hidden={!opened}
-          height="100vh"
         >
           <Navbar.Section>
             <Group p="md" position="apart">
@@ -107,16 +112,13 @@ const DashboardLayout: FC = () => {
                 display: "block",
                 padding: "10px",
                 color: "#333",
-                "&:hover": {
-                  backgroundColor: "#f1f3f5",
-                },
               }}
             >
               <Group>
                 <ThemeIcon variant="light" color="red" size="sm">
                   <IconLogout size={16} />
                 </ThemeIcon>
-                <Text size="sm">Logout</Text>
+                <Text size="sm" weight="bold">Logout</Text>
               </Group>
             </UnstyledButton>
           </Navbar.Section>

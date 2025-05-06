@@ -11,6 +11,7 @@ import Rockets from "./pages/rockets/Rockets";
 import Payloads from "./pages/payloads/Payloads";
 import { LaunchDetails } from "./pages/launches/launchDetails/LaunchDetails";
 import RocketDetails from "./pages/rockets/rocketDetails/RocketDetails";
+import About from "./pages/about/About";
 
 export const routes = [
   {
@@ -52,6 +53,10 @@ export const routes = [
       {
         path: "payloads",
         element: <Payloads />,
+      },
+      {
+        path: "about",
+        element: <About />,
       },
     ],
   },

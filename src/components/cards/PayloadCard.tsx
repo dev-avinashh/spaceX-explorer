@@ -1,4 +1,13 @@
-import { Card, Image, Text, Badge, Button, Group, Flex } from "@mantine/core";
+import {
+  Card,
+  Image,
+  Text,
+  Badge,
+  Button,
+  Group,
+  Flex,
+  Box,
+} from "@mantine/core";
 import { IPayload } from "../../pages/payloads/Payloads.interface";
 
 interface IPayloadProps {
@@ -6,7 +15,15 @@ interface IPayloadProps {
 }
 export const PayloadCard = ({ data }: IPayloadProps) => {
   return (
-    <Card shadow="sm" padding="lg" radius="md" withBorder w={350}>
+    <Card
+      shadow="sm"
+      padding="lg"
+      radius="md"
+      withBorder
+      w={370}
+      h={280}
+      style={{ position: "relative" }}
+    >
       <Card.Section>
         <Image
           src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
@@ -15,28 +32,22 @@ export const PayloadCard = ({ data }: IPayloadProps) => {
         />
       </Card.Section>
 
-      <Group mt="md" mb="xs">
-        <Flex
-          direction={{ base: "column", sm: "row" }}
-          gap={{ base: "sm", sm: "lg" }}
-          justify={{ sm: "center", base:"space-around" }}
-          wrap="wrap"
-        >
-          <Text fw={500}>{data.payload_id}</Text>
-          <Badge color="pink">{data.nationality}</Badge>
-        </Flex>
+      <Group mt="md" mb="xs" position="apart">
+        <Text fw={500}>
+          {data.payload_id.length > 15
+            ? data.payload_id.slice(0, 15) + "..."
+            : data.payload_id}
+        </Text>
+        <Badge color="pink">{data.nationality}</Badge>
       </Group>
 
       <Text size="sm" c="dimmed">
-        Manufacturer: {data.manufacturer}
+        Manufacturer: {data.manufacturer || "Unknown"}{" "}
       </Text>
       <Text size="sm" c="dimmed">
-        Payload Mass: {data.payload_mass_kg}
+        Payload Mass:{" "}
+        {data.payload_mass_kg ? `${data.payload_mass_kg} kg` : "Not specified"}
       </Text>
-
-      <Button color="blue" fullWidth mt="md" radius="md">
-        View Details
-      </Button>
     </Card>
   );
 };

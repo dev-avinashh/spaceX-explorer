@@ -1,4 +1,4 @@
-import { Card, Image, Text, Badge, Button, Group } from "@mantine/core";
+import { Card, Image, Text, Badge, Button, Group, Box } from "@mantine/core";
 import { ILaunch } from "../../pages/launches/launches.interface";
 import { useNavigate } from "react-router-dom";
 
@@ -12,7 +12,15 @@ export const Cards = ({ launch }: ICardProps) => {
   };
   return (
     <>
-      <Card shadow="sm" padding="lg" radius="md" withBorder maw={350}>
+      <Card
+        shadow="sm"
+        padding="lg"
+        radius="md"
+        withBorder
+        w={370}
+        h={350}
+        style={{ position: "relative" }}
+      >
         <Card.Section>
           <Image
             src={launch.links.mission_patch}
@@ -24,8 +32,10 @@ export const Cards = ({ launch }: ICardProps) => {
           />
         </Card.Section>
 
-        <Group mt="md" mb="xs">
-          <Text fw={500}>{launch.mission_name}</Text>
+        <Group mt="md" mb="xs" position="apart">
+          <Text fw={500}>
+            {launch.mission_name} ({launch.rocket.rocket_name}){" "}
+          </Text>
           <Badge color="pink">{launch.launch_year}</Badge>
         </Group>
 
@@ -35,15 +45,27 @@ export const Cards = ({ launch }: ICardProps) => {
             : launch.details || "No mission details available."}{" "}
         </Text>
 
-        <Button
-          color="blue"
-          onClick={() => viewDetailsHandler(launch.flight_number)}
-          fullWidth
-          mt="md"
-          radius="md"
+        <Box
+          style={{
+            position: "absolute",
+            bottom: "20px",
+            left: "0",
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+          }}
         >
-          View Details
-        </Button>
+          <Button
+            color="blue"
+            onClick={() => viewDetailsHandler(launch.flight_number)}
+            fullWidth
+            mt="md"
+            radius="md"
+            w={350}
+          >
+            View Details
+          </Button>
+        </Box>
       </Card>
     </>
   );

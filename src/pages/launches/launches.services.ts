@@ -38,7 +38,7 @@ export const searchByRocketName = async (rocket_name: string) => {
   }
 };
 
-export const getLaunchDataByFilter = async (filter: string) => {
+export const getLaunchDataByFilter = async (filter: string | null) => {
   try {
     const res = await axios.get(`${API_URL}launches/${filter}`);
     return res.data;
