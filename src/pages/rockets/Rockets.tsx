@@ -6,6 +6,8 @@ import { Flex, Pagination, Text, TextInput } from "@mantine/core";
 import { RocketsCard } from "../../components/cards/RocketsCard";
 import { Loading } from "../../components/loading/Loading";
 import { useDebouncedValue } from "@mantine/hooks";
+import { Title } from "../../components/common/Title";
+import { EmptyState } from "../../components/common/EmptyState";
 
 const Rockets: FC = () => {
   const {
@@ -49,15 +51,7 @@ const Rockets: FC = () => {
 
   return (
     <>
-      <Flex
-        direction={{ base: "column", sm: "row" }}
-        gap={{ base: "sm", sm: "xl" }}
-        justify={{ base: "center", sm: "flex-start" }}
-        wrap="wrap"
-        mb={40}
-      >
-        <Text style={{ fontSize: "24px" }}>Rockets used by SpaceX</Text>
-      </Flex>
+      <Title title="Rockets used by SpaceX" />
       <Flex
         mb={60}
         mr={100}
@@ -81,13 +75,19 @@ const Rockets: FC = () => {
         justify={{ sm: "center" }}
         wrap="wrap"
       >
-        {filteredRockets?.length === 0 && <> No Rocket Data Found</>}
+        {filteredRockets?.length === 0 && !loading && (
+          <EmptyState
+            onReset={() => {
+              setSearch("");
+            }}
+          />
+        )}
       </Flex>
 
       <Flex
         direction={{ base: "column", sm: "row" }}
         gap={{ base: "sm", sm: "lg" }}
-        justify={{ sm: "flex-start" }}
+        justify={{ base: "center", sm: "flex-start" }}
         wrap="wrap"
       >
         {loading ? (

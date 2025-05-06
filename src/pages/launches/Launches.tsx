@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { Cards } from "../../components/cards/Cards";
-import { Container, Flex, Pagination, Select, Text, TextInput } from "@mantine/core";
+import { Container, Flex, Pagination, Select, TextInput } from "@mantine/core";
 import {
   getLaunchDataByFilter,
   launchResponseData,
@@ -10,10 +10,12 @@ import { useQuery } from "@tanstack/react-query";
 import { ILaunch } from "./launches.interface";
 import { Loading } from "../../components/loading/Loading";
 import { useDebouncedValue } from "@mantine/hooks";
+import { Title } from "../../components/common/Title";
+import { EmptyState } from "../../components/common/EmptyState";
 
 const Launches: FC = () => {
-  const [activePage, setPage] = useState(1);
-  const [search, setSearch] = useState("");
+  const [activePage, setPage] = useState<number>(1);
+  const [search, setSearch] = useState<string>("");
   const [debouncedSearch] = useDebouncedValue(search, 700);
   const [launchFilter, setLaunchFilter] = useState<string | null>("");
 
@@ -49,6 +51,7 @@ const Launches: FC = () => {
     enabled: !!launchFilter,
   });
 
+  // For turing the active page 1 as any search or filter gets triggered
   useEffect(() => {
     setPage(1);
   }, [debouncedSearch, launchFilter]);
@@ -87,15 +90,7 @@ const Launches: FC = () => {
 
   return (
     <Container fluid>
-      <Flex
-        direction={{ base: "column", sm: "row" }}
-        gap={{ base: "sm", sm: "xl" }}
-        justify={{ base: "center", sm: "flex-start" }}
-        wrap="wrap"
-        mb={40}
-      >
-        <Text style={{ fontSize: "24px" }}>Launches Done By SpaceX</Text>
-      </Flex>
+      <Title title="Launches Done By SpaceX" />
       <Flex
         mb={60}
         direction={{ base: "column", sm: "row" }}
@@ -120,14 +115,21 @@ const Launches: FC = () => {
           style={{ border: "1px solid grey", color: "black" }}
         />
       </Flex>
-    
+
       <Flex
         direction={{ base: "column", sm: "row" }}
         gap={{ base: "sm", sm: "lg" }}
-        justify={{ sm:"flex-start" }}
+        justify={{ base: "center", sm: "flex-start" }}
         wrap="wrap"
       >
-        {launchData?.length === 0 && <>No result found</>}
+        {launchData?.length === 0 && !launchLoading && (
+          <EmptyState
+            onReset={() => {
+              setSearch("");
+              setLaunchFilter("");
+            }}
+          />
+        )}
         {launchLoading ? (
           <>
             <Loading count={dataPerPage} />

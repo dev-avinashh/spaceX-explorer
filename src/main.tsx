@@ -12,6 +12,7 @@ import Payloads from "./pages/payloads/Payloads";
 import { LaunchDetails } from "./pages/launches/launchDetails/LaunchDetails";
 import RocketDetails from "./pages/rockets/rocketDetails/RocketDetails";
 import About from "./pages/about/About";
+import { NotFound } from "./components/common/NotFound";
 
 export const routes = [
   {
@@ -59,6 +60,10 @@ export const routes = [
         element: <About />,
       },
     ],
+  },
+  {
+    path: "*",
+    element: <NotFound />,
   },
 ];
 

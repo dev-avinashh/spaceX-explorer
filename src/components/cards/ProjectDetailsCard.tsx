@@ -1,6 +1,24 @@
-import { Badge, Box, Button, Card, Grid, Group, List, Text, ThemeIcon, Title } from "@mantine/core";
+import {
+  Badge,
+  Box,
+  Button,
+  Card,
+  Divider,
+  Grid,
+  Group,
+  List,
+  Text,
+  ThemeIcon,
+  Title,
+} from "@mantine/core";
 import { assignmentProjectDetails } from "../../staticData/data";
-import { IconApi, IconBrandGithub, IconCheck, IconCode, IconExternalLink } from "@tabler/icons-react";
+import {
+  IconApi,
+  IconBrandGithub,
+  IconCheck,
+  IconCode,
+  IconExternalLink,
+} from "@tabler/icons-react";
 
 export const ProjectDetailsCard = () => {
   return (
@@ -19,9 +37,10 @@ export const ProjectDetailsCard = () => {
               </Badge>
             ))}
           </Group>
+          <Divider></Divider>
 
           <Box mt="md">
-            <Text weight={500} size="sm" mb="xs">
+            <Text weight={700} size="sm" mb="xs">
               <IconApi size={16} style={{ marginRight: 5 }} /> APIs Used:
             </Text>
             <List
@@ -40,7 +59,7 @@ export const ProjectDetailsCard = () => {
           </Box>
 
           <Box mt="md">
-            <Text weight={500} size="sm" mb="xs">
+            <Text weight={700} size="sm" mb="xs">
               <IconCode size={16} style={{ marginRight: 5 }} /> Functionality:
             </Text>
             <List
@@ -59,7 +78,7 @@ export const ProjectDetailsCard = () => {
           </Box>
 
           <Box mt="md">
-            <Text weight={500} size="sm" mb="xs">
+            <Text weight={700} size="sm" mb="xs">
               <IconExternalLink size={16} style={{ marginRight: 5 }} /> Pages
               Implemented:
             </Text>

@@ -20,7 +20,7 @@ import {
   IconPackage,
   IconLogout,
   IconFileAi,
-  IconDetails
+  IconDetails,
 } from "@tabler/icons-react";
 import { useAuthStore } from "../store/auth.store";
 
@@ -63,7 +63,7 @@ const DashboardLayout: FC = () => {
       padding="md"
       navbarOffsetBreakpoint="sm"
       navbar={
-        <Navbar 
+        <Navbar
           p="xs"
           width={{ base: 250 }}
           hiddenBreakpoint="sm"
@@ -72,9 +72,6 @@ const DashboardLayout: FC = () => {
           <Navbar.Section>
             <Group p="md" position="apart">
               <Group>
-                {/* <ThemeIcon color="blue" variant="light">
-                  <IconRocket size={18} />
-                </ThemeIcon> */}
                 <Text fw={700}>SpaceX Explorer</Text>
               </Group>
             </Group>
@@ -88,8 +85,8 @@ const DashboardLayout: FC = () => {
                   onClick={() => setOpened(false)}
                   style={({ isActive }) => ({
                     textDecoration: "none",
-                    backgroundColor: isActive ? "#d0ebff" : "transparent", // light blue
-                    color: isActive ? "#1c7ed6" : "#333", // dark blue if active
+                    backgroundColor: isActive ? "#d0ebff" : "transparent",
+                    color: isActive ? "#1c7ed6" : "#333",
                     display: "block",
                     padding: "10px",
                     borderRadius: "4px",
@@ -118,7 +115,9 @@ const DashboardLayout: FC = () => {
                 <ThemeIcon variant="light" color="red" size="sm">
                   <IconLogout size={16} />
                 </ThemeIcon>
-                <Text size="sm" weight="bold">Logout</Text>
+                <Text size="sm" weight="bold">
+                  Logout
+                </Text>
               </Group>
             </UnstyledButton>
           </Navbar.Section>
@@ -128,7 +127,7 @@ const DashboardLayout: FC = () => {
         <Header height={60} p="xs">
           <Group position="apart" sx={{ height: "100%" }}>
             <Group>
-              <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
+              <MediaQuery largerThan="sm" styles={{ display: "none" }}>
                 <Burger
                   opened={opened}
                   onClick={() => setOpened((o) => !o)}
@@ -137,9 +136,13 @@ const DashboardLayout: FC = () => {
                   mr="xs"
                 />
               </MediaQuery>
-              <Text size="lg" weight={500}>SpaceX Launch Dashboard</Text>
+              <Text size="lg" weight={500}>
+                SpaceX Launch Dashboard
+              </Text>
             </Group>
-            <Text size="xs" color="dimmed">v1.0.0</Text>
+            <Text size="xs" color="dimmed">
+              v1.0.0
+            </Text>
           </Group>
         </Header>
       }

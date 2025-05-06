@@ -6,6 +6,8 @@ import { IPayload } from "./Payloads.interface";
 import { Flex, Pagination, Select, Text, TextInput } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
 import { Loading } from "../../components/loading/Loading";
+import { Title } from "../../components/common/Title";
+import { EmptyState } from "../../components/common/EmptyState";
 
 const Payloads: FC = () => {
   const [activePage, setPage] = useState(1);
@@ -73,15 +75,7 @@ const Payloads: FC = () => {
 
   return (
     <>
-      <Flex
-        direction={{ base: "column", sm: "row" }}
-        gap={{ base: "sm", sm: "xl" }}
-        justify={{ base: "center", sm: "flex-start" }}
-        wrap="wrap"
-        mb={40}
-      >
-        <Text style={{ fontSize: "24px" }}>Payloads Use By SpaceX</Text>
-      </Flex>
+      <Title title="Payloads Use By SpaceX" />
       <Flex
         mb={60}
         mr={100}
@@ -113,13 +107,20 @@ const Payloads: FC = () => {
         justify={{ sm: "center" }}
         wrap="wrap"
       >
-        {filteredPayloadData.length === 0 && <>No Payload Data Available</>}
+        {filteredPayloadData.length === 0 && !loading && (
+          <EmptyState
+            onReset={() => {
+              setSearch("");
+              setPayloadFilter("");
+            }}
+          />
+        )}
       </Flex>
 
       <Flex
         direction={{ base: "column", sm: "row" }}
         gap={{ base: "sm", sm: "lg" }}
-        justify={{ sm: "flex-start" }}
+        justify={{ base: "center", sm: "flex-start" }}
         wrap="wrap"
       >
         {loading ? (
@@ -131,10 +132,10 @@ const Payloads: FC = () => {
           filteredPayloadData.length > 0 &&
           filteredPayloadData
             .slice(initialPageValue, finalPageValue)
-            .map((data) => {
+            .map((data, index) => {
               return (
                 <>
-                  <PayloadCard data={data} key={data.payload_id} />
+                  <PayloadCard data={data} key={index} />
                 </>
               );
             })
