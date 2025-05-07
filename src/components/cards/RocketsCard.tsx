@@ -95,7 +95,9 @@ export const RocketsCard = ({ rocket }: IRocketCardsProps) => {
             fullWidth
             mt="md"
             radius="md"
-            w={350}
+            sx={{
+              width: isMobile ? "270px" : "320px",
+            }}
             onClick={() => viewDetailsHandler(rocket.rocket_id)}
           >
             View Details
