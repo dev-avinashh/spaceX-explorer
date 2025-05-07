@@ -88,6 +88,7 @@ const Launches = () => {
   return (
     <Container
       fluid
+      px={isMobile ?  0 : ''}
       sx={{
         display: isMobile ? "flex" : "block",
         flexDirection: "column",
@@ -114,7 +115,7 @@ const Launches = () => {
         />
 
         <Select
-          placeholder="Filter Launches"
+          placeholder="Filter launches"
           data={["past", "upcoming"]}
           value={launchFilter}
           onChange={setLaunchFilter}

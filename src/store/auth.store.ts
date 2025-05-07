@@ -7,12 +7,15 @@ interface AuthState {
   logout: () => void;
 }
 
+const EMAIL: string = import.meta.env.VITE_AUTH_EMAIL;
+const PASSWORD: string = import.meta.env.VITE_AUTH_PASSWORD;
+
 export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
       isAuthenticated: false,
       login: (email: string, password: string) => {
-        if (email === "spacex@demo.com" && password === "demo@123") {
+        if (email === EMAIL && password === PASSWORD) {
           set({ isAuthenticated: true });
           return true;
         }

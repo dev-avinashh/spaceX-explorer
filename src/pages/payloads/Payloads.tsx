@@ -3,13 +3,7 @@ import { PayloadCard } from "../../components/cards/PayloadCard";
 import { useQuery } from "@tanstack/react-query";
 import { getFilteredPayloadList, payloadList } from "./Payload.services";
 import { IPayload } from "./Payloads.interface";
-import {
-  Container,
-  Flex,
-  Pagination,
-  Select,
-  TextInput,
-} from "@mantine/core";
+import { Container, Flex, Pagination, Select, TextInput } from "@mantine/core";
 import { useDebouncedValue, useMediaQuery } from "@mantine/hooks";
 import { Loading } from "../../components/loading/Loading";
 import { Title } from "../../components/common/Title";
@@ -83,6 +77,7 @@ const Payloads = () => {
   return (
     <Container
       fluid
+      px={isMobile ?  0 : ''}
       sx={{
         display: isMobile ? "flex" : "block",
         flexDirection: "column",
@@ -91,7 +86,7 @@ const Payloads = () => {
         flexWrap: "wrap",
       }}
     >
-      <Title title="Payloads Use By SpaceX" />
+      <Title title="Payloads Used By SpaceX" />
       <Flex
         mb={60}
         direction={isMobile ? "column" : "row"}
@@ -100,7 +95,7 @@ const Payloads = () => {
         wrap="wrap"
       >
         <TextInput
-          placeholder="Search by rocket name"
+          placeholder="Search by payload name"
           value={search}
           onChange={(event) => setSearch(event.currentTarget.value)}
           miw={300}
@@ -108,7 +103,7 @@ const Payloads = () => {
         />
 
         <Select
-          placeholder="Filter Launches"
+          placeholder="Filter payloads"
           data={["Flight number"]}
           searchValue={payloadFilter}
           onSearchChange={setPayloadFilter}
@@ -149,9 +144,7 @@ const Payloads = () => {
           filteredPayloadData
             .slice(initialPageValue, finalPageValue)
             .map((data, index) => {
-              return (
-                  <PayloadCard data={data} key={index} />
-              );
+              return <PayloadCard data={data} key={index} />;
             })
         )}
       </Flex>

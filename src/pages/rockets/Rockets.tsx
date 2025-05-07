@@ -54,6 +54,7 @@ const Rockets = () => {
   return (
     <Container
       fluid
+      px={isMobile ?  0 : ''}
       sx={{
         display: isMobile ? "flex" : "block",
         flexDirection: "column",
