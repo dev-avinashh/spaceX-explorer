@@ -1,4 +1,4 @@
-import { FC, ReactNode, useState } from "react";
+import { ReactNode, useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import {
   AppShell,
@@ -53,7 +53,7 @@ const navItems: INavItem[] = [
   },
 ];
 
-const DashboardLayout: FC = () => {
+const DashboardLayout = () => {
   const logout = useAuthStore((state) => state.logout);
   const [opened, setOpened] = useState(false);
   const theme = useMantineTheme();
@@ -140,9 +140,6 @@ const DashboardLayout: FC = () => {
                 SpaceX Launch Dashboard
               </Text>
             </Group>
-            <Text size="xs" color="dimmed">
-              v1.0.0
-            </Text>
           </Group>
         </Header>
       }

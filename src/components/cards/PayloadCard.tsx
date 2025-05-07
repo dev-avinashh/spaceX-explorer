@@ -9,19 +9,24 @@ import {
   Box,
 } from "@mantine/core";
 import { IPayload } from "../../pages/payloads/Payloads.interface";
+import { useMediaQuery } from "@mantine/hooks";
 
 interface IPayloadProps {
   data: IPayload;
 }
 export const PayloadCard = ({ data }: IPayloadProps) => {
+  const isMobile = useMediaQuery("(max-width: 600px)");
+
   return (
     <Card
       shadow="sm"
       padding="lg"
       radius="md"
       withBorder
-      w={370}
-      h={280}
+      sx={{
+        width: isMobile ? "300px" : "370px",
+        height: isMobile ? "370px" : "350px",
+      }}
       style={{ position: "relative" }}
     >
       <Card.Section>

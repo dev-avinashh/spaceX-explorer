@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Cards } from "../../components/cards/Cards";
 import { Container, Flex, Pagination, Select, TextInput } from "@mantine/core";
 import {
@@ -7,19 +7,21 @@ import {
   searchByRocketName,
 } from "./launches.services";
 import { useQuery } from "@tanstack/react-query";
+
 import { ILaunch } from "./launches.interface";
 import { Loading } from "../../components/loading/Loading";
-import { useDebouncedValue } from "@mantine/hooks";
+import { useDebouncedValue, useMediaQuery } from "@mantine/hooks";
 import { Title } from "../../components/common/Title";
 import { EmptyState } from "../../components/common/EmptyState";
 
-const Launches: FC = () => {
+const Launches = () => {
   const [activePage, setPage] = useState<number>(1);
   const [search, setSearch] = useState<string>("");
   const [debouncedSearch] = useDebouncedValue(search, 700);
   const [launchFilter, setLaunchFilter] = useState<string | null>("");
 
-  // query for handling all launches data
+  const isMobile = useMediaQuery("(max-width: 600px)");
+
   const {
     data: launches,
     isLoading: allLaunchLoading,
@@ -29,7 +31,6 @@ const Launches: FC = () => {
     queryFn: launchResponseData(),
   });
 
-  // query for handling searched launches data
   const {
     data: searchedLaunches,
     isLoading: searchedLoading,
@@ -40,7 +41,6 @@ const Launches: FC = () => {
     enabled: debouncedSearch.length > 0,
   });
 
-  // query for handling filters
   const {
     data: filteredLaunchedData,
     isLoading: filteredLaunchDataLoading,
@@ -51,12 +51,10 @@ const Launches: FC = () => {
     enabled: !!launchFilter,
   });
 
-  // For turing the active page 1 as any search or filter gets triggered
   useEffect(() => {
     setPage(1);
   }, [debouncedSearch, launchFilter]);
 
-  // determining launch data
   const launchData =
     search.length > 0
       ? searchedLaunches
@@ -64,7 +62,6 @@ const Launches: FC = () => {
       ? filteredLaunchedData
       : launches;
 
-  // determining launch loading state
   const launchLoading =
     search.length > 0
       ? searchedLoading
@@ -72,13 +69,13 @@ const Launches: FC = () => {
       ? filteredLaunchDataLoading
       : allLaunchLoading;
 
-  // determining launch error state
   const launchError =
     search.length > 0
       ? searchedError
       : launchFilter
       ? filteredLaunchDataError
       : allLaunchError;
+
   const dataPerPage = 12;
   const totalPages = launchData
     ? Math.ceil(launchData.length / dataPerPage)
@@ -89,20 +86,30 @@ const Launches: FC = () => {
   if (launchError) return <div>Error loading launches</div>;
 
   return (
-    <Container fluid>
+    <Container
+      fluid
+      sx={{
+        display: isMobile ? "flex" : "block",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        flexWrap: "wrap",
+      }}
+    >
       <Title title="Launches Done By SpaceX" />
+
       <Flex
         mb={60}
-        direction={{ base: "column", sm: "row" }}
-        gap={{ base: "sm", sm: "lg" }}
-        justify={{ sm: "flex-start" }}
+        direction={isMobile ? "column" : "row"}
+        gap="lg"
+        justify={isMobile ? "center" : "flex-start"}
         wrap="wrap"
       >
         <TextInput
           placeholder="Search by rocket name"
           value={search}
           onChange={(event) => setSearch(event.currentTarget.value)}
-          w={400}
+          miw={300}
           style={{ border: "1px solid grey", color: "black" }}
         />
 
@@ -112,14 +119,15 @@ const Launches: FC = () => {
           value={launchFilter}
           onChange={setLaunchFilter}
           clearable
+          miw={300}
           style={{ border: "1px solid grey", color: "black" }}
         />
       </Flex>
 
       <Flex
-        direction={{ base: "column", sm: "row" }}
-        gap={{ base: "sm", sm: "lg" }}
-        justify={{ base: "center", sm: "flex-start" }}
+        direction={isMobile ? "column" : "row"}
+        gap="lg"
+        justify={isMobile ? "center" : "flex-start"}
         wrap="wrap"
       >
         {launchData?.length === 0 && !launchLoading && (
@@ -130,13 +138,12 @@ const Launches: FC = () => {
             }}
           />
         )}
+
         {launchLoading ? (
-          <>
-            <Loading count={dataPerPage} />
-          </>
+          <Loading count={dataPerPage} />
         ) : (
           launchData &&
-          launchData?.length > 0 &&
+          launchData.length > 0 &&
           launchData
             .slice(initialPageValue, finalPageValue)
             .map((launch, index) => (
@@ -146,14 +153,9 @@ const Launches: FC = () => {
             ))
         )}
       </Flex>
-      <Flex
-        direction={{ base: "column", sm: "row" }}
-        gap={{ base: "sm", sm: "lg" }}
-        justify={{ sm: "center" }}
-        wrap="wrap"
-        mt={70}
-      >
-        {launchData && launchData?.length > 8 && (
+
+      <Flex mt={70} direction="row" justify="center" wrap="wrap" gap="md">
+        {launchData && launchData.length > 8 && (
           <Pagination
             value={activePage}
             onChange={setPage}

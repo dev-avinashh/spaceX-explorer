@@ -6,17 +6,19 @@ import {
   Button,
   Group,
   Progress,
-  Chip,
   Box,
 } from "@mantine/core";
 import { IRocket } from "../../pages/rockets/rockets.interface";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useMediaQuery } from "@mantine/hooks";
 
 interface IRocketCardsProps {
   rocket: IRocket;
 }
 
 export const RocketsCard = ({ rocket }: IRocketCardsProps) => {
+  const isMobile = useMediaQuery("(max-width: 600px)");
+
   const navigate = useNavigate();
 
   const viewDetailsHandler = (rocketId: string) => {
@@ -29,8 +31,10 @@ export const RocketsCard = ({ rocket }: IRocketCardsProps) => {
         padding="lg"
         radius="md"
         withBorder
-        w={370}
-        h={390}
+        sx={{
+          width: isMobile ? "300px" : "370px",
+          height: isMobile ? "400px" : "390px",
+        }}
         style={{ position: "relative" }}
       >
         <Card.Section>
