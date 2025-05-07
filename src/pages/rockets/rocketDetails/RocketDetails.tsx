@@ -14,6 +14,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getRocketDetails } from "../rockets.services";
 import { DetailsPageLoading } from "../../../components/loading/DetailsPageLoading";
 
+
 const RocketDetails = () => {
   const { rocketId } = useParams<{ rocketId: string | undefined }>();
   const navigate = useNavigate();
