@@ -8,7 +8,6 @@ import {
   Flex,
   Pagination,
   Select,
-  Text,
   TextInput,
 } from "@mantine/core";
 import { useDebouncedValue, useMediaQuery } from "@mantine/hooks";
@@ -151,9 +150,7 @@ const Payloads = () => {
             .slice(initialPageValue, finalPageValue)
             .map((data, index) => {
               return (
-                <>
                   <PayloadCard data={data} key={index} />
-                </>
               );
             })
         )}

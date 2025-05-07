@@ -3,10 +3,7 @@ import {
   Image,
   Text,
   Badge,
-  Button,
   Group,
-  Flex,
-  Box,
 } from "@mantine/core";
 import { IPayload } from "../../pages/payloads/Payloads.interface";
 import { useMediaQuery } from "@mantine/hooks";
@@ -25,7 +22,7 @@ export const PayloadCard = ({ data }: IPayloadProps) => {
       withBorder
       sx={{
         width: isMobile ? "300px" : "370px",
-        height: isMobile ? "370px" : "350px",
+        height: isMobile ? "300px" : "300px",
       }}
       style={{ position: "relative" }}
     >

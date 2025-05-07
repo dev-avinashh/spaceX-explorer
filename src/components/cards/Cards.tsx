@@ -66,7 +66,9 @@ export const Cards = ({ launch }: ICardProps) => {
             fullWidth
             mt="md"
             radius="md"
-            w={350}
+            sx={{
+              width: isMobile ? "270px" : "320px",
+            }}
           >
             View Details
           </Button>
