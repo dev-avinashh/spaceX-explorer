@@ -1,20 +1,28 @@
-import { FC, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { PayloadCard } from "../../components/cards/PayloadCard";
 import { useQuery } from "@tanstack/react-query";
 import { getFilteredPayloadList, payloadList } from "./Payload.services";
 import { IPayload } from "./Payloads.interface";
-import { Flex, Pagination, Select, Text, TextInput } from "@mantine/core";
-import { useDebouncedValue } from "@mantine/hooks";
+import {
+  Container,
+  Flex,
+  Pagination,
+  Select,
+  Text,
+  TextInput,
+} from "@mantine/core";
+import { useDebouncedValue, useMediaQuery } from "@mantine/hooks";
 import { Loading } from "../../components/loading/Loading";
 import { Title } from "../../components/common/Title";
 import { EmptyState } from "../../components/common/EmptyState";
 
-const Payloads: FC = () => {
+const Payloads = () => {
+  const isMobile = useMediaQuery("(max-width: 600px)");
+
   const [activePage, setPage] = useState(1);
   const [payloadFilter, setPayloadFilter] = useState("");
   const [search, setSearch] = useState("");
   const [debouncedSearch] = useDebouncedValue(search, 700);
-
   const [searchLoading, setSearchLoading] = useState(false);
 
   useEffect(() => {
@@ -74,21 +82,29 @@ const Payloads: FC = () => {
   if (payloadError) return <>Error Occurred</>;
 
   return (
-    <>
+    <Container
+      fluid
+      sx={{
+        display: isMobile ? "flex" : "block",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        flexWrap: "wrap",
+      }}
+    >
       <Title title="Payloads Use By SpaceX" />
       <Flex
         mb={60}
-        mr={100}
-        direction={{ base: "column", sm: "row" }}
-        gap={{ base: "sm", sm: "lg" }}
-        justify={{ sm: "flex-start" }}
+        direction={isMobile ? "column" : "row"}
+        gap="lg"
+        justify={isMobile ? "center" : "flex-start"}
         wrap="wrap"
       >
         <TextInput
           placeholder="Search by rocket name"
           value={search}
           onChange={(event) => setSearch(event.currentTarget.value)}
-          w={400}
+          miw={300}
           style={{ border: "1px solid grey", color: "black" }}
         />
 
@@ -98,6 +114,7 @@ const Payloads: FC = () => {
           searchValue={payloadFilter}
           onSearchChange={setPayloadFilter}
           clearable
+          miw={300}
           style={{ border: "1px solid grey", color: "black" }}
         />
       </Flex>
@@ -157,7 +174,7 @@ const Payloads: FC = () => {
           />
         )}
       </Flex>
-    </>
+    </Container>
   );
 };
 

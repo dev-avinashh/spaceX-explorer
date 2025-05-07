@@ -1,11 +1,14 @@
 import { Card, Image, Text, Badge, Button, Group, Box } from "@mantine/core";
 import { ILaunch } from "../../pages/launches/launches.interface";
 import { useNavigate } from "react-router-dom";
+import { useMediaQuery } from "@mantine/hooks";
 
 interface ICardProps {
   launch: ILaunch;
 }
 export const Cards = ({ launch }: ICardProps) => {
+  const isMobile = useMediaQuery("(max-width: 600px)");
+
   const navigate = useNavigate();
   const viewDetailsHandler = (flight_number: number) => {
     navigate(`/dashboard/launches/${flight_number}`);
@@ -17,8 +20,10 @@ export const Cards = ({ launch }: ICardProps) => {
         padding="lg"
         radius="md"
         withBorder
-        w={370}
-        h={350}
+        sx={{
+          width: isMobile ? "300px" : "370px",
+          height: isMobile ? "370px" : "350px",
+        }}
         style={{ position: "relative" }}
       >
         <Card.Section>

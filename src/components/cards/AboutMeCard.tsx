@@ -113,6 +113,7 @@ export const AboutMeCard = () => {
         fullWidth
         mt="xl"
         component="a"
+        target="_blank"
         href={personalInfo.resumeLink}
       >
         View Resume
